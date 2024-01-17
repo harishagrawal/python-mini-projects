@@ -42,11 +42,10 @@ import pytest
 import tempfile
 import shutil
 from unittest.mock import patch
-from Cryptodome.Cipher import AES
+from Crypto.Cipher import AES
 from binascii import b2a_hex
 import encrypt
 
-# Test Scenario 1: File to be encrypted exists and is accessible
 def test_encrypt_file_exists():
     with tempfile.NamedTemporaryFile(delete=False) as f:
         path = f.name
@@ -56,23 +55,20 @@ def test_encrypt_file_exists():
     os.remove(path)
     os.remove(path + ".bin")
 
-# Test Scenario 2: File to be encrypted does not exist
 def test_encrypt_file_not_exists():
     with pytest.raises(FileNotFoundError):
         encrypt.encrypt_file("non_existing_file.txt")
 
-# Test Scenario 3: File to be encrypted is not readable
 def test_encrypt_file_not_readable():
     with tempfile.NamedTemporaryFile(delete=False) as f:
         path = f.name
         f.write(b'Test file content')
-    os.chmod(path, 0o200)  # Make the file not readable
+    os.chmod(path, 0o200)  
     with pytest.raises(PermissionError):
         encrypt.encrypt_file(path)
-    os.chmod(path, 0o600)  # Reset the file permission
+    os.chmod(path, 0o600)  
     os.remove(path)
 
-# Test Scenario 4: Encrypted file cannot be written
 @patch('builtins.open', side_effect=PermissionError)
 def test_encrypt_file_cannot_write(mock_open):
     with tempfile.NamedTemporaryFile(delete=False) as f:
@@ -82,7 +78,6 @@ def test_encrypt_file_cannot_write(mock_open):
         encrypt.encrypt_file(path)
     os.remove(path)
 
-# Test Scenario 5: File to be encrypted is empty
 def test_encrypt_file_empty():
     with tempfile.NamedTemporaryFile(delete=False) as f:
         path = f.name
@@ -93,18 +88,14 @@ def test_encrypt_file_empty():
     os.remove(path)
     os.remove(path + ".bin")
 
-# Test Scenario 6: File to be encrypted contains non-ASCII characters
 def test_encrypt_file_non_ascii():
     with tempfile.NamedTemporaryFile(delete=False) as f:
         path = f.name
-        f.write(b'\xc3\xa9')  # writing 'é' in utf-8
+        f.write(b'\xc3\xa9')  
     encrypt.encrypt_file(path)
     assert os.path.isfile(path + ".bin")
     os.remove(path)
     os.remove(path + ".bin")
 
-# Test Scenario 7: File to be encrypted is very large
 def test_encrypt_file_large():
-    # TODO: This test requires a large file, which is not feasible to create during a unit test
-    # Consider mocking the file reading process or skipping this test in unit testing
     pass
