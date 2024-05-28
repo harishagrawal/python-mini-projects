@@ -3,6 +3,7 @@ import sys
 import requests
 import re
 from bs4 import BeautifulSoup
+from timedinput import timedinput
 
 # switching to current running python files directory
 # os.chdir('\\'.join(__file__.split('/')[:-1]))
@@ -10,7 +11,9 @@ from bs4 import BeautifulSoup
 # function to get the html of the page
 def get_page():
 	global url
-	url = input('Enter url of a medium article: ')
+    # https://medium.com/code-for-cause/open-source-organizations-that-use-python-3b052224afd9
+	# url = input('Enter url of a medium article: ')
+	url = timedinput('Enter url of a medium article: ', timeout=5, default="https://medium.com/code-for-cause/open-source-organizations-that-use-python-3b052224afd9")
 	# handling possible error
 	if not re.match(r'https?://medium.com/',url):
 		print('Please enter a valid website, or make sure it is a medium article')
