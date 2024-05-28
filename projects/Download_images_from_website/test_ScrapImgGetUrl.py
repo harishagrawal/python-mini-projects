@@ -63,7 +63,7 @@ import time
 
 # Also, the get_url function should be written in the scrap_img.py file
 
-from Download_images_from_website.scrap_img import get_url
+from scrap_img import get_url
 
 
 class Test_ScrapImgGetUrl:
