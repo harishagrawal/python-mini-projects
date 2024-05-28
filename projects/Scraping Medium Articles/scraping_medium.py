@@ -5,7 +5,7 @@ import re
 from bs4 import BeautifulSoup
 
 # switching to current running python files directory
-os.chdir('\\'.join(__file__.split('/')[:-1]))
+# os.chdir('\\'.join(__file__.split('/')[:-1]))
 
 # function to get the html of the page
 def get_page():
