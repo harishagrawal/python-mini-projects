@@ -1,3 +1,4 @@
-beautifulsoup4==4.9.1
-requests==2.23.0
-timedinput==0.1.1
+beautifulsoup4
+pytest
+Requests
+timedinput
